@@ -1,4 +1,8 @@
 {
-  "networkID": 3,
-  "blockConfirmations": 0
+  "network": "regtest",
+  "rpcUsername": "foo",
+  "rpcPassword": "j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=",
+  "rpcPort": 18443,
+  "blockConfirmations": 0,
+  "pollingTime": 1000
 }

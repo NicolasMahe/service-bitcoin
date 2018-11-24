@@ -1,4 +1,5 @@
 import { NewBlockEventEmitterInterface } from "./interface"
 import newBlockEventEmitterWS from "./websocket"
+import newBlockEventEmitter from "./polling"
 
-export { NewBlockEventEmitterInterface, newBlockEventEmitterWS }
+export { NewBlockEventEmitterInterface, newBlockEventEmitter, newBlockEventEmitterWS }

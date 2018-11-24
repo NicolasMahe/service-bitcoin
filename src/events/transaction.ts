@@ -1,20 +1,30 @@
 import Service from "mesg-js/lib/service"
 import { BlockHeader } from "../newBlock/interface";
 
-export = async (mesg: Service, networkID: Number, blockHeader: BlockHeader) => {
-  const blockExplorer = require('blockchain.info').blockExplorer.usingNetwork(networkID)
-  const block = await blockExplorer.getBlock(blockHeader.blockHash)
-  block.tx.forEach(async (transaction: any) => {
-    transaction.out.forEach(async (out: any) => {
+export = async (mesg: Service, bitcoinClient: any, blockHeader: BlockHeader) => {
+  const block = await bitcoinClient.getBlock(blockHeader.blockHash, 2)
+  block.tx.forEach(async (tx: any) => {
+    tx.vout.forEach(async (vout: any) => {
       try {
-        if (out.addr !== undefined) {
-          await mesg.emitEvent('transaction', {
-            to: out.addr,
-            value: out.value.toString(),
-            transactionHash: transaction.hash,
-            blockHash: blockHeader.blockHash,
-            blockNumber: blockHeader.blockNumber,
-          })          
+        let addresses = vout.scriptPubKey.addresses
+        if (addresses !== undefined) {
+          if (!Array.isArray(addresses)) {
+            addresses = [addresses]
+          }
+          addresses.forEach(async (address: any) => {
+            try {
+              await mesg.emitEvent('transaction', {
+                to: address,
+                value: vout.value.toString(),
+                transactionHash: tx.hash,
+                blockHash: block.hash,
+                blockNumber: block.height,
+              })
+            }
+            catch (error) {
+              console.error('catch transactions address', error)
+            }
+          })
         }
       }
       catch (error) {

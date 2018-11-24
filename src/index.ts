@@ -1,9 +1,12 @@
 import { service as MESG } from "mesg-js"
 import config from "../config.json"
-import { newBlockEventEmitterWS } from "./newBlock"
+import { newBlockEventEmitter } from "./newBlock"
 import Service from "mesg-js/lib/service"
 import { EmitEventReply } from "mesg-js/lib/client/service-client"
 import transactionEvent from "./events/transaction"
+import send from "./tasks/send"
+const BitcoinCore = require('bitcoin-core')
+// import * as BitcoinCore from "bitcoin-core"
 
 const main = async () => {
   const mesg = MESG()
@@ -14,15 +17,22 @@ const main = async () => {
   //   return {} as EmitEventReply
   // }
   // END HACK FOR TESTING
-  
-  // mesg.listenTask({
-  //   decodeLog: decodeLog(web3),
-  //   executeSmartContractMethod: executeSmartContractMethod(web3, config.defaultGasLimit),
-  //   callSmartContractMethod: callSmartContractMethod(web3)
-  // })
-  // .on('error', error => console.error('catch listenTask', error))
 
-  const newBlock = await newBlockEventEmitterWS(config.networkID, config.blockConfirmations, 0)
+  const bitcoinClient = new BitcoinCore({
+    network: config.network,
+    // wallet: 'wallet1.dat',
+    host: 'bitcoincore',
+    username: config.rpcUsername,
+    password: config.rpcPassword,
+    port: config.rpcPort
+  });
+  
+  mesg.listenTask({
+    send: send(bitcoinClient)
+  })
+  .on('error', error => console.error('catch listenTask', error))
+
+  const newBlock = await newBlockEventEmitter(bitcoinClient, config.blockConfirmations, 0, config.pollingTime)
   newBlock.on('newBlock', blockHeader => {
     try {
       console.error('new block', blockHeader.blockNumber)
@@ -30,7 +40,7 @@ const main = async () => {
       // blockEvent(mesg, web3, blockNumber)
       // .catch(error => console.error('catch block event', error))
 
-      transactionEvent(mesg, config.networkID, blockHeader)
+      transactionEvent(mesg, bitcoinClient, blockHeader)
       .catch(error => console.error('catch transactionEvent', error))
     }
     catch (error) {
