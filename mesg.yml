@@ -1,0 +1,43 @@
+name: "Bitcoin"
+description: "Service to interact with the Bitcoin network."
+events:
+  transaction:
+    data:
+      to:
+        type: String
+      value:
+        type: String
+      blockHash:
+        type: String
+      blockNumber:
+        type: Number
+      transactionHash:
+        type: String
+tasks:
+  send:
+    inputs:
+      to:
+        type: String
+      value:
+        type: String
+      privateKey:
+        name: "Signer private key"
+        description: "The private key to sign the transaction"
+        type: String
+    outputs:
+      success:
+        name: "Success"
+        description: "Output when the task executes successfully"
+        data:
+          transactionHash:
+            name: "Transaction hash"
+            description: "Hash of the transaction"
+            type: String
+      error:
+        name: "Error"
+        description: "Output when an error occurs"
+        data:
+          message:
+            name: "Message"
+            description: "The error message"
+            type: String
