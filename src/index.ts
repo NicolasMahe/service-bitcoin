@@ -34,7 +34,7 @@ const main = async () => {
   })
   .on('error', error => console.error('catch listenTask', error))
 
-  const newBlock = await newBlockEventEmitter(bitcoinClient, config.blockConfirmations, 0, config.pollingTime)
+  const newBlock = await newBlockEventEmitter(bitcoinClient, config.blockConfirmations, null, config.pollingTime)
   newBlock.on('newBlock', blockHeader => {
     try {
       console.error('new block', blockHeader.blockNumber)
