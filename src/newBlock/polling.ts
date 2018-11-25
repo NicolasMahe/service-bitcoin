@@ -14,8 +14,8 @@ export = async (bitcoinClient: any, blockConfirmations: number, initialBlockNumb
           blockNumber,
           blockHash
         })
+        previousBlockNumber = blockNumber
       }
-      previousBlockNumber = lastBlockNumber
     } catch (error) {
       console.error("catch polling", error)
     }
