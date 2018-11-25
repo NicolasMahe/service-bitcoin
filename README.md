@@ -6,6 +6,7 @@ MESG Service for communication with bitcoin blockchain
 Bitcoin Core API: https://bitcoin.org/en/developer-reference#bitcoin-core-apis
 Bitcoin Core Docker image: https://github.com/ruimarinho/docker-bitcoin-core
 Bitcoin Core JS Client: https://github.com/ruimarinho/bitcoin-core
+Bitcoin Core JS RPC func: https://github.com/ruimarinho/bitcoin-core/blob/master/src/methods.js
 
 # Bitcoin cli
 

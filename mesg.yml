@@ -40,7 +40,7 @@ tasks:
             name: "Transaction hash"
             description: "Hash of the transaction"
             type: String
-      error:
+      error: &error
         name: "Error"
         description: "Output when an error occurs"
         data:
@@ -48,3 +48,18 @@ tasks:
             name: "Message"
             description: "The error message"
             type: String
+  initDev:
+    name: "Initialize development environment"
+    description: "Mine 101 blocks and returns the public and private key of the default wallet."
+    outputs:
+      success:
+        name: "Success"
+        description: "Output when the task executes successfully"
+        data:
+          address:
+            name: "Wallet's address"
+            type: String
+          privateKey:
+            name: "Wallet's private key"
+            type: String
+      error: *error
