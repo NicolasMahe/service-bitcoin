@@ -63,3 +63,13 @@ tasks:
             name: "Wallet's private key"
             type: String
       error: *error
+  generate:
+    name: "Generate 1 block"
+    outputs:
+      success:
+        name: "Success"
+        description: "Output when the task executes successfully"
+        data:
+          blockHash:
+            type: String
+      error: *error

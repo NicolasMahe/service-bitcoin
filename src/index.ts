@@ -6,6 +6,7 @@ import { EmitEventReply } from "mesg-js/lib/client/service-client"
 import transactionEvent from "./events/transaction"
 import send from "./tasks/send"
 import initDev from "./tasks/initDev"
+import generate from "./tasks/generate"
 const BitcoinCore = require('bitcoin-core')
 // import * as BitcoinCore from "bitcoin-core"
 
@@ -31,6 +32,7 @@ const main = async () => {
   mesg.listenTask({
     send: send(bitcoinClient),
     initDev: initDev(bitcoinClient),
+    generate: generate(bitcoinClient),
   })
   .on('error', error => console.error('catch listenTask', error))
 
