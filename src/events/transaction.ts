@@ -1,5 +1,5 @@
-import Service from "mesg-js/lib/service"
 import { BlockHeader } from "../newBlock/interface";
+import Service from "mesg-js/lib/service/service";
 
 export = async (mesg: Service, bitcoinClient: any, blockHeader: BlockHeader) => {
   const block = await bitcoinClient.getBlock(blockHeader.blockHash, 2)
