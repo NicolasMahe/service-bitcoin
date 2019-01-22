@@ -1,5 +1,4 @@
 import { service as MESG } from "mesg-js"
-import config from "../config.json"
 import { newBlockEventEmitter } from "./newBlock"
 import transactionEvent from "./events/transaction"
 import send from "./tasks/send"
@@ -7,15 +6,22 @@ import initDev from "./tasks/initDev"
 import generate from "./tasks/generate"
 const BitcoinCore = require('bitcoin-core')
 
+const network = process.env.NETWORK
+const rpcUsername = process.env.RPC_USERNAME
+const rpcPassword = process.env.RPC_PASSWORD
+const rpcPort = parseInt(<string>process.env.RPC_PORT, 10)
+const blockConfirmations = parseInt(<string>process.env.BLOCK_CONFIRMATIONS, 10)
+const pollingTime = parseInt(<string>process.env.POLLING_TIME, 10)
+
 const main = async () => {
   const mesg = MESG()
 
   const bitcoinClient = new BitcoinCore({
-    network: config.network,
+    network: network,
     host: 'bitcoincore',
-    username: config.rpcUsername,
-    password: config.rpcPassword,
-    port: config.rpcPort
+    username: rpcUsername,
+    password: rpcPassword,
+    port: rpcPort
   });
   
   mesg.listenTask({
@@ -25,7 +31,7 @@ const main = async () => {
   })
   .on('error', error => console.error('catch listenTask', error))
 
-  const newBlock = await newBlockEventEmitter(bitcoinClient, config.blockConfirmations, null, config.pollingTime)
+  const newBlock = await newBlockEventEmitter(bitcoinClient, blockConfirmations, null, pollingTime)
   newBlock.on('newBlock', blockHeader => {
     try {
       console.error('new block', blockHeader.blockNumber)

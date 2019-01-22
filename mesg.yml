@@ -1,6 +1,14 @@
 name: "Bitcoin"
 sid: "com.mesg.bitcoin"
 description: "Service to interact with the Bitcoin network."
+configuration:
+  env:
+    - NETWORK=regtest
+    - RPC_USERNAME=foo
+    - RPC_PASSWORD=j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=
+    - RPC_PORT=18443
+    - BLOCK_CONFIRMATIONS=0
+    - POLLING_TIME=1000
 dependencies:
   bitcoincore:
     image: ruimarinho/bitcoin-core
