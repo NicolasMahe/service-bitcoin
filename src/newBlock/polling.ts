@@ -22,14 +22,8 @@ export = async (bitcoinClient: any, blockConfirmations: number, initialBlockNumb
     } catch (error) {
       console.error("catch polling", error)
     }
-    return setTimeout(async () => {
-      try {
-        await pollingBlockNumber()
-      } catch (error) {
-        console.error("catch polling timeout", error)
-      }
-    }, pollingTime)
+    return setTimeout(pollingBlockNumber, pollingTime)
   }
-  await pollingBlockNumber()
+  pollingBlockNumber()
   return newBlock
 }
