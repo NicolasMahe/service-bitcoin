@@ -6,6 +6,6 @@ export default (bitcoinClient: any) => async (inputs: TaskInputs, outputs: TaskO
     return outputs.success({ blockHash: generate[0] })
   }
   catch (error) {
-    return outputs.error({ message: error.toString() })
+    return outputs.error({ message: error.message })
   }
 }

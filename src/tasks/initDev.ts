@@ -12,6 +12,6 @@ export default (bitcoinClient: any) => async (inputs: TaskInputs, outputs: TaskO
     return outputs.success({ address, privateKey })
   }
   catch (error) {
-    return outputs.error({ message: error.toString() })
+    return outputs.error({ message: error.message })
   }
 }
