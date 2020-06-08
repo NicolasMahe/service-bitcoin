@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@liteflow/service": "^1.0.7",
     "@types/node": "^10.12.18",
     "bitcoin-core": "^2.0.0",
-    "mesg-js": "^2.0.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.4"
   },
